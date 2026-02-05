@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>E-Commerce Demo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f4f4;
+            padding: 40px;
+        }
+        .container {
+            max-width: 600px;
+            background: #fff;
+            padding: 20px;
+            margin: auto;
+            border-radius: 5px;
+        }
+        h2 {
+            text-align: center;
+        }
+        input, button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+        }
+        button {
+            background: #007bff;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        pre {
+            background: #eee;
+            padding: 10px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>E-Commerce Backend Demo</h2>
+
+    <h3>Add Product</h3>
+    <input type="number" id="addId" placeholder="Product ID">
+    <input type="text" id="addName" placeholder="Product Name">
+    <input type="text" id="addDescription" placeholder="Product Description">
+    <button onclick="addProduct()">Add Product</button>
+
+    <h3>Get Product By ID</h3>
+    <input type="number" id="getId" placeholder="Product ID">
+    <button onclick="getProduct()">Get Product</button>
+
+    <h3>Response</h3>
+    <pre id="response"></pre>
+</div>
+
+<script>
+    // CHANGE THIS URL AFTER HOSTING BACKEND
+    const BASE_URL = "http://localhost:8081/api/v1/products";
+
+    function addProduct() {
+        const product = {
+            id: document.getElementById("addId").value,
+            name: document.getElementById("addName").value,
+            description: document.getElementById("addDescription").value
+        };
+
+        fetch(BASE_URL, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(product)
+        })
+        .then(res => res.json())
+        .then(data => {
+            document.getElementById("response").textContent =
+                JSON.stringify(data, null, 2);
+        })
+        .catch(err => {
+            document.getElementById("response").textContent = err;
+        });
+    }
+
+    function getProduct() {
+        const id = document.getElementById("getId").value;
+
+        fetch(`${BASE_URL}/${id}`)
+        .then(res => res.json())
+        .then(data => {
+            document.getElementById("response").textContent =
+                JSON.stringify(data, null, 2);
+        })
+        .catch(err => {
+            document.getElementById("response").textContent = err;
+        });
+    }
+</script>
+
+</body>
+</html>
