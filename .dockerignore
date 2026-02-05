@@ -1,0 +1,14 @@
+# Ignore nothing needed for build
+!.mvn
+!mvnw
+!mvnw.cmd
+!pom.xml
+!src
+!target
+
+# Ignore git and IDE files
+.git
+.gitignore
+.settings
+.classpath
+.project
